@@ -7,8 +7,8 @@ import numpy as np
 
 from torchvision import datasets, transforms
 
-batch_size = 64
-epoch_num = 300
+batch_size = 32
+epoch_num = 100
 device = 'cuda' #cpu
 
 class Generator(nn.Module):
@@ -63,6 +63,8 @@ train_loader = torch.utils.data.DataLoader(
 ones_label = torch.ones(batch_size, 1).to(device)
 # zeros_label = torch.zeros(batch_size, 1)
 
+fixed_z = torch.randn(1, 100).to(device)
+
 for epoch in range(epoch_num):
     total_iter = len(train_loader)
     for batch_idx, (X, _) in enumerate(train_loader):
@@ -95,8 +97,7 @@ for epoch in range(epoch_num):
 
         if batch_idx % 300 == 0:
             print('epoch {} [{}/{}], D_loss {:.5f}, G_loss {:.5f}'.format(epoch, batch_idx, total_iter, float(D_loss), float(G_loss)))
-            # G_sample = G(torch.randn(1, 100).to(device))
-            G_sample = G(torch.zeros(1, 100).to(device)).to(device) #fixed z
+            G_sample = G(fixed_z).to(device) #fixed z
             raw_img = G_sample.view(-1, 28).detach().cpu().numpy()
             img = (raw_img * 255).astype(np.uint8)
             from PIL import Image
