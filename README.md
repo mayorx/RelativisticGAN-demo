@@ -14,4 +14,5 @@ python main.py
 
 ### Related
 [Original Repo](https://github.com/AlexiaJM/RelativisticGAN)
+
 [Paper](https://arxiv.org/abs/1807.00734)
