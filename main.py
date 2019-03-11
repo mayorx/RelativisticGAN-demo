@@ -93,16 +93,12 @@ for epoch in range(epoch_num):
         G_loss.backward()
         G_solver.step()
 
-
-
-        if batch_idx % 10 == 0:
+        if batch_idx % 300 == 0:
             print('epoch {} [{}/{}], D_loss {:.5f}, G_loss {:.5f}'.format(epoch, batch_idx, total_iter, float(D_loss), float(G_loss)))
-        if batch_idx % 500 == 0:
-            G_sample = G(torch.randn(1, 100).to(device))
+            # G_sample = G(torch.randn(1, 100).to(device))
+            G_sample = G(torch.zeros(1, 100).to(device)).to(device) #fixed z
             raw_img = G_sample.view(-1, 28).detach().cpu().numpy()
             img = (raw_img * 255).astype(np.uint8)
             from PIL import Image
-            Image.fromarray(img).save('./results/tmp/epoch-{}-iter-{}.png'.format(epoch, batch_idx))
-
-
+            Image.fromarray(img).save('./debug/RGAN/epoch-{}-iter-{:04}.png'.format(epoch, batch_idx))
 
