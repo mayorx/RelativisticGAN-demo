@@ -100,5 +100,5 @@ for epoch in range(epoch_num):
             raw_img = G_sample.view(-1, 28).detach().cpu().numpy()
             img = (raw_img * 255).astype(np.uint8)
             from PIL import Image
-            Image.fromarray(img).save('./debug/RGAN/epoch-{}-iter-{:04}.png'.format(epoch, batch_idx))
+            Image.fromarray(img).save('./results/tmp/epoch-{}-iter-{:04}.png'.format(epoch, batch_idx))
 
